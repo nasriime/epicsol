@@ -1,13 +1,17 @@
 <div>
   <h3>Search</h3>
-  <input type="text" className="form-control" id="search" name="search" (change)="contactSearch"
-      aria-describedby="search" placeholder="Search by name" />
+  <form>
+    <div class="form-group">
+      <input type="text" class="form-control" id="search" name="search" 
+          [(ngModel)]="query" (input)="contactSearch" placeholder="Search by name" />
+    </div>
+  </form>
 </div>
 
-<div *ngFor="let contact of contacts">
-  <p className="mr-4 pl-3">{{contsct.name}}</p>
+<div *ngFor="let contact of filteredContacts">
+  <p class="mr-4 pl-3">{{contact.name}}</p>
   <div>
-      <button type="button" (click)="edit" className="btn btn-primary mr-2">Edit</button>
-      <button type="button" (click)="remove" className="btn btn-danger">X</button>
+      <button type="button" (click)="edit(contact)" class="btn btn-primary mr-2">Edit</button>
+      <button type="button" (click)="remove(contact.id)" class="btn btn-danger">X</button>
   </div>
 </div>
