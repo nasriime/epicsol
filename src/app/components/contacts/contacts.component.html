@@ -1,0 +1,13 @@
+<div>
+  <h3>Search</h3>
+  <input type="text" className="form-control" id="search" name="search" (change)="contactSearch"
+      aria-describedby="search" placeholder="Search by name" />
+</div>
+
+<div *ngFor="let contact of contacts">
+  <p className="mr-4 pl-3">{{contsct.name}}</p>
+  <div>
+      <button type="button" (click)="edit" className="btn btn-primary mr-2">Edit</button>
+      <button type="button" (click)="remove" className="btn btn-danger">X</button>
+  </div>
+</div>

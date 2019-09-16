@@ -1,0 +1,20 @@
+<form ngSubmit="submitContact">
+  <div className="form-group">
+      <label htmlFor="name">Contact name</label>
+      <input type="text" className="form-control" id="name" name="name" placeholder="Contact name" />
+  </div>
+  <div className="form-group">
+      <label htmlFor="model">Email</label>
+      <input type="email" className="form-control" id="email" name="email" placeholder="email" />
+  </div>
+  <div className="form-group">
+      <label htmlFor="horsepower">Phones</label>
+      <input type="text" className="form-control" id="Phones" name="Phones" placeholder="Phones" />
+  </div>
+
+  <button type="submit" className="btn btn-primary">Add</button>
+
+</form>
+    
+<button className="btn btn-primary mr-2" (click)="editContact">Edit</button>
+<button className="btn btn-secondary" (click)="cancelEdit">cancel</button>
