@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { IContact } from '../contacts/interfaces/contact.interface';
 
 @Component({
   selector: 'app-form',
@@ -8,6 +9,8 @@ import { Component, OnInit } from '@angular/core';
 export class FormComponent implements OnInit {
 
   add: boolean = true;
+  @Input() contactToUpdate: IContact;
+
 
   constructor() { }
 
