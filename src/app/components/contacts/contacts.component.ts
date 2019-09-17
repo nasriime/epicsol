@@ -39,7 +39,7 @@ export class ContactsComponent implements OnInit {
   remove(id){
     this.contactsService.deleteContact(id).subscribe(
       (data: any)=>{
-        console.log(data);
+        this.filteredContacts =  Object.assign([], this.contacts).filter(contact=> contact.id !== id);
       },
       (err: Response) => {
         console.log(err);

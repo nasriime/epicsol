@@ -17,11 +17,11 @@ export class ContactsService {
   }
 
   updateContact(contact){
-    return this.http.put('http://localhost:4000/contacts', contact);
+    return this.http.put(`http://localhost:4000/contacts/${contact.id}`, contact);
   }
 
 
   deleteContact(id){
-    return this.http.delete('http://localhost:4000/contacts', id);
+    return this.http.delete(`http://localhost:4000/contacts/${id}`);
   }
 }
