@@ -9,6 +9,8 @@ import { IContact } from '../contacts/interfaces/contact.interface';
 export class FormComponent implements OnInit {
 
   add: boolean = true;
+  model: any = {};
+
   @Input() contactToUpdate: IContact;
 
 
@@ -17,8 +19,12 @@ export class FormComponent implements OnInit {
   ngOnInit() {
   }
 
-  submitContact(){
+  onSubmit(){
 
+  }
+
+  addPhone(){
+    
   }
 
   editContact(){
