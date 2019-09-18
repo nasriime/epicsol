@@ -1,35 +1,52 @@
-<form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+<form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
   <div class="form-group">
       <label>Contact name</label>
-      <input type="text" class="form-control" name="name" placeholder="Contact name" 
-        [(ngModel)]="model.name" #name="ngModel" 
-        [ngClass]="{ 'is-invalid': f.submitted && name.invalid && name.dirty || name.touched }" required />
-        <div *ngIf="f.submitted && name.invalid && name.dirty || name.touched" class="invalid-feedback">
-          <div *ngIf="name.errors.required">Name is required</div>
+      <input type="text" class="form-control" name="name" placeholder="Contact name" formControlName="name"
+        [ngClass]="{ 'is-invalid':  submitted && f.name.errors  && f.name.dirty || f.name.touched }" />
+        <div *ngIf="submitted && f.name.invalid && f.name.dirty || f.name.touched" class="invalid-feedback">
+          <div *ngIf="f.name.errors.required">Name is required</div>
         </div>
   </div>
   <div class="form-group">
       <label>Email</label>
-      <input type="email" class="form-control" name="email" placeholder="email" 
-        [(ngModel)]="model.email" #email="ngModel" 
-        [ngClass]="{ 'is-invalid': f.submitted && email.invalid && email.dirty || email.touched }" required />
-      <div *ngIf="f.submitted && email.invalid" class="invalid-feedback">
-        <div *ngIf="email.errors?.required">Email is required</div>
-        <div *ngIf="email.errors?.email">Email must be a valid email address</div>
+      <input type="email" class="form-control" name="email" placeholder="email" formControlName="email"
+        [ngClass]="{ 'is-invalid': submitted && f.email.errors && f.email.dirty || f.email.touched }" />
+      <div *ngIf="submitted && f.email.errors && f.email.dirty || f.email.touched" class="invalid-feedback">
+        <div *ngIf="f.email.errors.required">Email is required</div>
+        <div *ngIf="f.email.errors.email">Email must be a valid email address</div>
       </div>
   </div>
   <div class="form-row">
     <div class="col-md-4 mb-3">
-      <label for="validationDefault01">First name</label>
-      <input type="text" class="form-control" id="validationDefault01" placeholder="First name" value="Mark" required>
+      <label>Phone type</label>
+      <select class="custom-select mr-sm-2" name="phoneType" formControlName="phoneType"
+        [ngClass]="{ 'is-invalid': submitted && f.phoneType.errors && f.phoneType.dirty || f.phoneType.touched }" >
+        <option *ngFor="let phoneType of PhoneTypes; let i = index" [value]="phoneType" [selected]="i==0">{{ phoneType }}</option>
+      </select>
+      <div *ngIf="submitted && f.phoneType.errors && f.phoneType.dirty || f.phoneType.touched" class="invalid-feedback">
+        <div *ngIf="f.phoneType.errors.required">Phone type is required</div>
+      </div>
     </div>
     <div class="col-md-4 mb-3">
-      <label for="validationDefault02">Last name</label>
-      <input type="text" class="form-control" id="validationDefault02" placeholder="Last name" value="Otto" required>
+      <label>Phone number</label>
+      <input type="text" class="form-control" placeholder="Type number" formControlName="phoneNumber"
+        [ngClass]="{ 'is-invalid': submitted && f.phoneNumber.errors && f.phoneNumber.dirty || f.phoneNumber.touched }" >
+        <div *ngIf="submitted && f.phoneNumber.errors && f.phoneNumber.dirty || f.phoneNumber.touched" class="invalid-feedback">
+          <!-- <div *ngIf="f.phoneNumber.errors.required">Phone number is required</div> -->
+          <div *ngIf="f.phoneNumber.errors.minlength">Password must be at least 6 characters</div>
+        </div>
     </div>
     <div class="col-md-4 mb-3">
-      <button class="btn btn-success mr-2" (click)="addPhone">Edit</button>
+      <button class="btn btn-success mr-2 d-inline-block btn__phone" (click)="addPhone()">Add phone</button>
     </div>
+
+    <div *ngIf="phonesList.length">
+      <div class="" *ngFor="let phone of phonesList">
+        <p>{{phone.label}}</p>
+        <p>{{phone.number}}</p>
+      </div>
+    </div>
+   
   </div>
   <div class="form-group">
       <label>Phones</label>
