@@ -12,7 +12,7 @@ export class ContactsComponent implements OnInit {
   contacts: Array<IContact>;
   filteredContacts: Array<IContact>;
   query: string;
-  @Output() contactChange = new EventEmitter<IContact>();
+  // @Output() contactChange = new EventEmitter<IContact>();
 
   constructor(private contactsService: ContactsService) { }
 
@@ -33,7 +33,7 @@ export class ContactsComponent implements OnInit {
   }
 
   edit(contact){
-    this.contactChange.emit(contact);
+    // this.contactChange.emit(contact);
   }
 
   remove(id){

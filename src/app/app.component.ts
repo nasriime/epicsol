@@ -7,9 +7,4 @@ import { IContact } from './components/contacts/interfaces/contact.interface';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  contactToUpdate: IContact;
-
-  onContactChanged(value){
-    this.contactToUpdate = value;
-  }
 }

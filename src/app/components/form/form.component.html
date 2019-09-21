@@ -1,65 +1,70 @@
-<form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
+<form [formGroup]="contactForm" >
   <div class="form-group">
       <label>Contact name</label>
       <input type="text" class="form-control" name="name" placeholder="Contact name" formControlName="name"
-        [ngClass]="{ 'is-invalid':  submitted && f.name.errors  && f.name.dirty || f.name.touched }" />
-        <div *ngIf="submitted && f.name.invalid && f.name.dirty || f.name.touched" class="invalid-feedback">
-          <div *ngIf="f.name.errors.required">Name is required</div>
+        [ngClass]="{ 'is-invalid': f.name.errors  && (f.name.dirty || f.name.touched) }" />
+        <div *ngIf="f.name.invalid && (f.name.dirty || f.name.touched)" class="invalid-feedback">
+          <div *ngIf="f.name.errors?.required">Name is required</div>
         </div>
   </div>
   <div class="form-group">
       <label>Email</label>
       <input type="email" class="form-control" name="email" placeholder="email" formControlName="email"
-        [ngClass]="{ 'is-invalid': submitted && f.email.errors && f.email.dirty || f.email.touched }" />
-      <div *ngIf="submitted && f.email.errors && f.email.dirty || f.email.touched" class="invalid-feedback">
-        <div *ngIf="f.email.errors.required">Email is required</div>
-        <div *ngIf="f.email.errors.email">Email must be a valid email address</div>
+        [ngClass]="{ 'is-invalid':f.email.errors && (f.email.dirty || f.email.touched) }" />
+      <div *ngIf="f.email.errors && (f.email.dirty || f.email.touched)" class="invalid-feedback">
+        <div *ngIf="f.email.errors.required">- Email is required</div>
+        <div *ngIf="f.email.errors.email">- Email must be a valid email address</div>
       </div>
   </div>
   <div class="form-row">
     <div class="col-md-4 mb-3">
       <label>Phone type</label>
       <select class="custom-select mr-sm-2" name="phoneType" formControlName="phoneType"
-        [ngClass]="{ 'is-invalid': submitted && f.phoneType.errors && f.phoneType.dirty || f.phoneType.touched }" >
-        <option *ngFor="let phoneType of PhoneTypes; let i = index" [value]="phoneType" [selected]="i==0">{{ phoneType }}</option>
-      </select>
-      <div *ngIf="submitted && f.phoneType.errors && f.phoneType.dirty || f.phoneType.touched" class="invalid-feedback">
+        [ngClass]="{ 'is-invalid': f.phoneType.errors && (f.phoneType.dirty || f.phoneType.touched) }" >
+        <option *ngFor="let phoneType of phoneTypes; let i = index" [value]="phoneType">{{ phoneType }}</option>
+      </select>      
+      <!-- <div *ngIf="f.phoneType.errors && (f.phoneType.dirty || f.phoneType.touched)" class="invalid-feedback">
+        <div *ngIf="f.phoneType.errors.isRequired">Phone type is required</div>
         <div *ngIf="f.phoneType.errors.required">Phone type is required</div>
-      </div>
+      </div> -->
     </div>
     <div class="col-md-4 mb-3">
       <label>Phone number</label>
       <input type="text" class="form-control" placeholder="Type number" formControlName="phoneNumber"
-        [ngClass]="{ 'is-invalid': submitted && f.phoneNumber.errors && f.phoneNumber.dirty || f.phoneNumber.touched }" >
-        <div *ngIf="submitted && f.phoneNumber.errors && f.phoneNumber.dirty || f.phoneNumber.touched" class="invalid-feedback">
+        [ngClass]="{ 'is-invalid': f.phoneNumber.errors && (f.phoneNumber.dirty || f.phoneNumber.touched) }" >
+        <div *ngIf="f.phoneNumber.errors && (f.phoneNumber.dirty || f.phoneNumber.touched)" class="invalid-feedback">
           <!-- <div *ngIf="f.phoneNumber.errors.required">Phone number is required</div> -->
-          <div *ngIf="f.phoneNumber.errors.minlength">Password must be at least 6 characters</div>
+          <div *ngIf="f.phoneNumber.errors.minlength">- Number must be at least 6 characters</div>
+          <div *ngIf="f.phoneNumber.errors.pattern">- Use numbers only</div>
         </div>
     </div>
     <div class="col-md-4 mb-3">
       <button class="btn btn-success mr-2 d-inline-block btn__phone" (click)="addPhone()">Add phone</button>
     </div>
 
-    <div *ngIf="phonesList.length">
-      <div class="" *ngFor="let phone of phonesList">
-        <p>{{phone.label}}</p>
-        <p>{{phone.number}}</p>
+    <div class="col-12" *ngIf="phonesList.length">
+      <div class="row">
+          <p class="col-2 font-weight-bold">Label</p>
+          <p class="col-2 font-weight-bold">Number</p>
+      </div>
+      <div class="row" *ngFor="let phone of phonesList">
+        <p class="col-2">{{phone.label}}</p>
+        <p class="col-2">{{phone.number}}</p>
+        <div class="col-2">
+          <button class="btn btn-danger" (click)="removePhone(phone)">X</button>
+        </div>
       </div>
     </div>
    
   </div>
-  <div class="form-group">
-      <label>Phones</label>
-      <input type="text" class="form-control" id="Phones" name="Phones" placeholder="Phones" />
-  </div>
 
-  <button *ngIf="add" type="submit" class="btn btn-primary">Add</button>
+  <button *ngIf="add" type="submit" class="btn btn-primary" (click)="onSubmit()">Add</button>
 
 </form>
 
 <div *ngIf="!add">
-  <button class="btn btn-primary mr-2" (click)="editContact">Edit</button>
-  <button class="btn btn-secondary" (click)="cancelEdit">cancel</button>
+  <button class="btn btn-primary mr-2" (click)="editContact()">Edit</button>
+  <button class="btn btn-secondary" (click)="cancelEdit()">cancel</button>
 </div>
     
 

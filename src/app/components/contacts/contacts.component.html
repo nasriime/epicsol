@@ -11,9 +11,9 @@
 <div *ngIf="filteredContacts">
   <div *ngIf="!filteredContacts.length">No contacts found!</div>
 
-  <div class="d-flex" *ngFor="let contact of filteredContacts">
-    <p class="mr-4 pl-3">{{contact.name}}</p>
-    <div>
+  <div class="row" *ngFor="let contact of filteredContacts">
+    <p class="col-3 mr-4 pl-3">{{contact.name}}</p>
+    <div class="col-4">
         <button type="button" (click)="edit(contact)" class="btn btn-primary mr-2">Edit</button>
         <button type="button" (click)="remove(contact.id)" class="btn btn-danger">X</button>
     </div>

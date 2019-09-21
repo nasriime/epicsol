@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ContactsService } from "../../services/contacts.service";
 import { IContact } from '../contacts/interfaces/contact.interface';
@@ -16,23 +16,19 @@ export class FormComponent implements OnInit {
   phoneTypes: string[] = ['Home', 'Mobile', 'Work'];
   phonesList =[];
 
-
-  @Input() contactToUpdate: IContact;
+  // @Input() contactToUpdate: IContact;
+  // @Output() contactChange = new EventEmitter<IContact>();
 
 
   constructor(private formBuilder: FormBuilder, private contactsService: ContactsService) { }
 
   ngOnInit() {
-
     this.contactForm = this.formBuilder.group({
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      phoneType: ['', [Validators.required]],
-      phoneNumber: ['', [Validators.required, Validators.minLength(10)]]
-    //   {
-    //     validator: MustMatch('password', 'confirmPassword')
-    // }
-  });
+      phoneType: ['Home'],
+      phoneNumber: ['', [Validators.minLength(6),Validators.pattern(/^[0-9]+$/)]]
+    });
   }
 
   get f() { return this.contactForm.controls; }
@@ -40,42 +36,42 @@ export class FormComponent implements OnInit {
 
   onSubmit(){
     this.submitted = true;
+    let { name, email } = this.contactForm.value;
 
-    // stop here if form is invalid
     if (this.contactForm.invalid) {
         return;
     }
 
     const obj = {
-      name: '',
-      email: '',
+      name,
+      email,
       phones:this.phonesList
     }
 
-    // this.contactsService.addContact(obj).subscribe(
-    //   (data: Array<IContact>)=>{
-       
-    //   },
-    //   (err: Response) => {
-    //     console.log(err);
-    //   }
-    // )
-
-    console.log(this.contactForm.value);
+    this.contactsService.addContact(obj).subscribe(
+      (data: Array<IContact>)=>{
+       console.log(data);
+      },
+      (err: Response) => {
+        console.log(err);
+      }
+    )
 
   }
 
   addPhone(){
-    const { phoneType, phoneNumber } = this.contactForm.value;
+    let { phoneType, phoneNumber } = this.contactForm.value;
     if(phoneType && phoneNumber){
       const existNumber = this.phonesList.find(phone=> phone.number === phoneNumber);
-      if(existNumber.length){
+      if(existNumber){
         return
       }
+
       this.phonesList.push({
         label: phoneType,
         number: phoneNumber
-      })
+      });
+      this.contactForm.get('phoneNumber').reset();
     }
   }
 
