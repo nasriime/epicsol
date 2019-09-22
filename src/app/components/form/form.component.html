@@ -45,11 +45,11 @@
     <div class="col-12" *ngIf="phonesList.length">
       <div class="row">
           <p class="col-2 font-weight-bold">Label</p>
-          <p class="col-2 font-weight-bold">Number</p>
+          <p class="col-3 font-weight-bold">Number</p>
       </div>
       <div class="row" *ngFor="let phone of phonesList">
         <p class="col-2">{{phone.label}}</p>
-        <p class="col-2">{{phone.number}}</p>
+        <p class="col-3">{{phone.number}}</p>
         <div class="col-2">
           <button class="btn btn-danger" (click)="removePhone(phone)">X</button>
         </div>

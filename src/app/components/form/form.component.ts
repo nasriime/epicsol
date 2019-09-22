@@ -10,19 +10,30 @@ import { IContact } from '../contacts/interfaces/contact.interface';
 })
 export class FormComponent implements OnInit {
   contactForm: FormGroup;
-  submitted = false;
+  submitted: boolean= false;
   add: boolean = true;
   model: any = {};
   phoneTypes: string[] = ['Home', 'Mobile', 'Work'];
   phonesList =[];
-
-  // @Input() contactToUpdate: IContact;
-  // @Output() contactChange = new EventEmitter<IContact>();
+  contactToEditId;
 
 
   constructor(private formBuilder: FormBuilder, private contactsService: ContactsService) { }
 
   ngOnInit() {
+    this.contactsService.currentContactToEdit.subscribe((contact: IContact)=> {
+      if(contact.name){
+        this.contactForm.patchValue({
+          name: contact.name,
+          email: contact.email,
+       });
+        this.phonesList = contact.phones;
+
+        this.add = false;
+        this.contactToEditId = contact.id;
+      } 
+    });
+
     this.contactForm = this.formBuilder.group({
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
@@ -49,8 +60,12 @@ export class FormComponent implements OnInit {
     }
 
     this.contactsService.addContact(obj).subscribe(
-      (data: Array<IContact>)=>{
-       console.log(data);
+      (data: IContact)=>{
+        this.contactForm.reset({
+          phoneType: this.contactForm.get('phoneType').value, 
+        });
+       this.phonesList =[];
+       this.contactsService.changeAddedContact(data);
       },
       (err: Response) => {
         console.log(err);
@@ -80,10 +95,39 @@ export class FormComponent implements OnInit {
   }
 
   editContact(){
+    this.submitted = true;
+    let { name, email } = this.contactForm.value;
 
+    if (this.contactForm.invalid) {
+        return;
+    }
+
+    const obj = {
+      name,
+      email,
+      phones:this.phonesList
+    }
+
+    this.contactsService.updateContact(this.contactToEditId, obj).subscribe(
+      (data: IContact)=>{
+       console.log(data);
+       this.contactForm.reset({
+          phoneType: this.contactForm.get('phoneType').value, 
+        });
+       this.phonesList =[];
+       this.contactsService.changeAddedContact(data);
+      },
+      (err: Response) => {
+        console.log(err);
+      }
+    )
   }
 
   cancelEdit(){
-
+    this.add = true;
+    this.phonesList = [];
+    this.contactForm.reset({
+      phoneType: this.contactForm.get('phoneType').value, 
+    });
   }
 }

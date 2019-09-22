@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ContactsService } from "../../services/contacts.service";
 import { IContact } from './interfaces/contact.interface';
 
@@ -12,11 +12,20 @@ export class ContactsComponent implements OnInit {
   contacts: Array<IContact>;
   filteredContacts: Array<IContact>;
   query: string;
-  // @Output() contactChange = new EventEmitter<IContact>();
+  addedContact;
 
   constructor(private contactsService: ContactsService) { }
 
   ngOnInit() {
+    this.contactsService.currentAddedContact.subscribe( (contact: IContact) => {
+      if(this.filteredContacts){
+          const existContact = this.filteredContacts.findIndex( item => item.id === contact.id );
+          if(existContact > -1){
+            return this.filteredContacts[existContact] = contact;
+          }
+          this.filteredContacts.push(contact);
+      }
+    });
     this.getContacts();
   }
 
@@ -33,7 +42,7 @@ export class ContactsComponent implements OnInit {
   }
 
   edit(contact){
-    // this.contactChange.emit(contact);
+    this.contactsService.changeContactToEdit(contact);
   }
 
   remove(id){
