@@ -14,47 +14,6 @@
           "number": "010012345622"
         }
       ]
-    },
-    {
-      "name": "Ahmed",
-      "email": "ahmed@gmail.com",
-      "phones": [
-        {
-          "label": "home",
-          "number": "010012345622"
-        },
-        {
-          "label": "mobile",
-          "number": "010012345622"
-        }
-      ],
-      "id": 2
-    },
-    {
-      "id": 3,
-      "name": "Ali",
-      "email": "ali@gmail.com",
-      "phones": [
-        {
-          "label": "home",
-          "number": "010012345622"
-        },
-        {
-          "label": "mobile",
-          "number": "010012345622"
-        }
-      ]
-    },
-    {
-      "name": "Mercedesss",
-      "email": "sasa@dddd",
-      "phones": [
-        {
-          "label": "Home",
-          "number": "21212121"
-        }
-      ],
-      "id": 4
     }
   ]
 }
