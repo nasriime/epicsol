@@ -8,6 +8,8 @@
   </form>
 </div>
 
+<div *ngIf="loading">loading...</div>
+
 <div *ngIf="filteredContacts">
   <div *ngIf="!filteredContacts.length">No contacts found!</div>
 

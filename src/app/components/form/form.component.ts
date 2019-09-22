@@ -16,6 +16,7 @@ export class FormComponent implements OnInit {
   phoneTypes: string[] = ['Home', 'Mobile', 'Work'];
   phonesList =[];
   contactToEditId;
+  loading: boolean = false;
 
 
   constructor(private formBuilder: FormBuilder, private contactsService: ContactsService) { }
@@ -47,6 +48,7 @@ export class FormComponent implements OnInit {
 
   onSubmit(){
     this.submitted = true;
+    this.loading = true;
     let { name, email } = this.contactForm.value;
 
     if (this.contactForm.invalid) {
@@ -61,6 +63,7 @@ export class FormComponent implements OnInit {
 
     this.contactsService.addContact(obj).subscribe(
       (data: IContact)=>{
+        this.loading = false;
         this.contactForm.reset({
           phoneType: this.contactForm.get('phoneType').value, 
         });
@@ -69,6 +72,7 @@ export class FormComponent implements OnInit {
       },
       (err: Response) => {
         console.log(err);
+        this.loading = false;
       }
     )
 
@@ -96,6 +100,7 @@ export class FormComponent implements OnInit {
 
   editContact(){
     this.submitted = true;
+    this.loading = true;
     let { name, email } = this.contactForm.value;
 
     if (this.contactForm.invalid) {
@@ -110,7 +115,7 @@ export class FormComponent implements OnInit {
 
     this.contactsService.updateContact(this.contactToEditId, obj).subscribe(
       (data: IContact)=>{
-       console.log(data);
+       this.loading = false;
        this.contactForm.reset({
           phoneType: this.contactForm.get('phoneType').value, 
         });
@@ -119,6 +124,7 @@ export class FormComponent implements OnInit {
       },
       (err: Response) => {
         console.log(err);
+        this.loading = false;
       }
     )
   }

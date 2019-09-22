@@ -13,6 +13,7 @@ export class ContactsComponent implements OnInit {
   filteredContacts: Array<IContact>;
   query: string;
   addedContact;
+  loading: boolean = true;
 
   constructor(private contactsService: ContactsService) { }
 
@@ -32,11 +33,13 @@ export class ContactsComponent implements OnInit {
   getContacts(){
     this.contactsService.getContacts().subscribe(
       (data: Array<IContact>)=>{
+        this.loading = false;
         this.contacts = data;
         this.filteredContacts = Object.assign([], this.contacts);
       },
       (err: Response) => {
         console.log(err);
+        this.loading = false;
       }
     )
   }
@@ -46,12 +49,16 @@ export class ContactsComponent implements OnInit {
   }
 
   remove(id){
+    this.loading = true;
+
     this.contactsService.deleteContact(id).subscribe(
       (data: any)=>{
+        this.loading = false;
         this.filteredContacts = this.filteredContacts.filter(contact=> contact.id !== id);
       },
       (err: Response) => {
         console.log(err);
+        this.loading = false;
       }
     )
   }
