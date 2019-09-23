@@ -18,6 +18,7 @@ export class ContactsComponent implements OnInit {
   constructor(private contactsService: ContactsService) { }
 
   ngOnInit() {
+    // watch on contact if added or edited to update contacts list  
     this.contactsService.currentAddedContact.subscribe( (contact: IContact) => {
       if(this.filteredContacts){
           const existContact = this.filteredContacts.findIndex( item => item.id === contact.id );
@@ -30,6 +31,7 @@ export class ContactsComponent implements OnInit {
     this.getContacts();
   }
 
+  // Listing contacts
   getContacts(){
     this.contactsService.getContacts().subscribe(
       (data: Array<IContact>)=>{
@@ -44,10 +46,12 @@ export class ContactsComponent implements OnInit {
     )
   }
 
+  // send single contact to the other component to edit
   edit(contact){
     this.contactsService.changeContactToEdit(contact);
   }
 
+  // Delete contact from the list
   remove(id){
     this.loading = true;
 
@@ -63,6 +67,7 @@ export class ContactsComponent implements OnInit {
     )
   }
 
+  // search functionality
   contactSearch(){
     if(!this.query){
         this.filteredContacts = Object.assign([], this.contacts);

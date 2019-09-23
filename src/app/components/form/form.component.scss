@@ -1,3 +1,16 @@
 .btn__phone{
     margin-top: 31px;
+    @media(max-width: 992px){
+        margin-top: 0;
+    }
+}
+
+.phone__label{
+    min-width: 70px;
+
+}
+
+.phone__number{
+    min-width: 120px;
+
 }

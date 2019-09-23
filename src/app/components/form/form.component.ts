@@ -10,7 +10,6 @@ import { IContact } from '../contacts/interfaces/contact.interface';
 })
 export class FormComponent implements OnInit {
   contactForm: FormGroup;
-  submitted: boolean= false;
   add: boolean = true;
   model: any = {};
   phoneTypes: string[] = ['Home', 'Mobile', 'Work'];
@@ -22,6 +21,7 @@ export class FormComponent implements OnInit {
   constructor(private formBuilder: FormBuilder, private contactsService: ContactsService) { }
 
   ngOnInit() {
+    // send single item to edit 
     this.contactsService.currentContactToEdit.subscribe((contact: IContact)=> {
       if(contact.name){
         this.contactForm.patchValue({
@@ -35,6 +35,7 @@ export class FormComponent implements OnInit {
       } 
     });
 
+    // Form initailaization 
     this.contactForm = this.formBuilder.group({
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
@@ -45,13 +46,13 @@ export class FormComponent implements OnInit {
 
   get f() { return this.contactForm.controls; }
 
-
+// submit add form
   onSubmit(){
-    this.submitted = true;
     this.loading = true;
     let { name, email } = this.contactForm.value;
 
     if (this.contactForm.invalid) {
+        this.loading = false;
         return;
     }
 
@@ -78,6 +79,7 @@ export class FormComponent implements OnInit {
 
   }
 
+  // add phone to list of phones
   addPhone(){
     let { phoneType, phoneNumber } = this.contactForm.value;
     if(phoneType && phoneNumber){
@@ -94,12 +96,13 @@ export class FormComponent implements OnInit {
     }
   }
 
+  // remove phone from phone list
   removePhone(item){
     this.phonesList = this.phonesList.filter(phone=> phone.number != item.number);
   }
 
+  // submit edit form
   editContact(){
-    this.submitted = true;
     this.loading = true;
     let { name, email } = this.contactForm.value;
 
@@ -129,6 +132,7 @@ export class FormComponent implements OnInit {
     )
   }
 
+  // cancel edit operation and convert it to add operation 
   cancelEdit(){
     this.add = true;
     this.phonesList = [];

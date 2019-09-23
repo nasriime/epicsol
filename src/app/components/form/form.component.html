@@ -1,3 +1,4 @@
+<h3>Add or Edit contacts form </h3>
 <form [formGroup]="contactForm" >
   <div class="form-group">
       <label>Contact name</label>
@@ -17,7 +18,7 @@
       </div>
   </div>
   <div class="form-row">
-    <div class="col-md-4 mb-3">
+    <div class="col-md-6 col-lg-4 mb-3">
       <label>Phone type</label>
       <select class="custom-select mr-sm-2" name="phoneType" formControlName="phoneType"
         [ngClass]="{ 'is-invalid': f.phoneType.errors && (f.phoneType.dirty || f.phoneType.touched) }" >
@@ -28,7 +29,7 @@
         <div *ngIf="f.phoneType.errors.required">Phone type is required</div>
       </div> -->
     </div>
-    <div class="col-md-4 mb-3">
+    <div class="col-md-6 col-lg-4 mb-3">
       <label>Phone number</label>
       <input type="text" class="form-control" placeholder="Type number" formControlName="phoneNumber"
         [ngClass]="{ 'is-invalid': f.phoneNumber.errors && (f.phoneNumber.dirty || f.phoneNumber.touched) }" >
@@ -38,32 +39,32 @@
           <div *ngIf="f.phoneNumber.errors.pattern">- Use numbers only</div>
         </div>
     </div>
-    <div class="col-md-4 mb-3">
-      <button class="btn btn-success mr-2 d-inline-block btn__phone" (click)="addPhone()">Add phone</button>
+    <div class="col-md-6 col-lg-4 mb-3">
+      <button class="btn btn-success btn-block mr-2 d-inline-block btn__phone" (click)="addPhone()">Add phone</button>
     </div>
 
     <div class="col-12" *ngIf="phonesList.length">
-      <div class="row">
-          <p class="col-2 font-weight-bold">Label</p>
-          <p class="col-3 font-weight-bold">Number</p>
+      <div class="d-flex">
+          <p class="phone__label font-weight-bold">Label</p>
+          <p class="phone__number font-weight-bold">Number</p>
       </div>
-      <div class="row" *ngFor="let phone of phonesList">
-        <p class="col-2">{{phone.label}}</p>
-        <p class="col-3">{{phone.number}}</p>
-        <div class="col-2">
+      <div class="d-flex mb-1" *ngFor="let phone of phonesList">
+        <p class="phone__label">{{phone.label}}</p>
+        <p class="phone__number">{{phone.number}}</p>
+        <div>
           <button class="btn btn-danger" (click)="removePhone(phone)">X</button>
         </div>
       </div>
     </div>
    
   </div>
-  <div *ngIf="loading">loading...</div>
+  <div *ngIf="loading" class="font-weight-bold mb-2">loading...</div>
 
-  <button *ngIf="add" type="submit" class="btn btn-primary" (click)="onSubmit()">Add</button>
+  <button *ngIf="add" type="submit" class="btn btn-primary mb-5" (click)="onSubmit()">Add</button>
 
 </form>
 
-<div *ngIf="!add">
+<div *ngIf="!add" class="mb-5">
   <button class="btn btn-primary mr-2" (click)="editContact()">Edit</button>
   <button class="btn btn-secondary" (click)="cancelEdit()">cancel</button>
 </div>

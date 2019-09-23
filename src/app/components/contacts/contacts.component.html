@@ -8,14 +8,14 @@
   </form>
 </div>
 
-<div *ngIf="loading">loading...</div>
+<div *ngIf="loading" class="font-weight-bold mb-2">loading...</div>
 
 <div *ngIf="filteredContacts">
   <div *ngIf="!filteredContacts.length">No contacts found!</div>
 
-  <div class="row" *ngFor="let contact of filteredContacts">
-    <p class="col-3 mr-4 pl-3">{{contact.name}}</p>
-    <div class="col-4">
+  <div class="d-flex mb-1" *ngFor="let contact of filteredContacts">
+    <p class="contact__name mr-4 pl-3">{{contact.name}}</p>
+    <div>
         <button type="button" (click)="edit(contact)" class="btn btn-primary mr-2">Edit</button>
         <button type="button" (click)="remove(contact.id)" class="btn btn-danger">X</button>
     </div>
