@@ -10,7 +10,7 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app w
 
 ## Screenshoot from the app
 
-![alt text](https://github.com/nasriime/epicsol/tree/master/src/assets/screenshot.png)
+![alt text](https://raw.github.com/nasriime/epicsol/master/src/assets/screenshot.png)
 
 
 
